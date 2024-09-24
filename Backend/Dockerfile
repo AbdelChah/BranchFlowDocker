@@ -16,5 +16,5 @@ RUN chmod +x /usr/src/app/wait-for-it.sh
 EXPOSE 5000
 
 # Use wait-for-it.sh to wait for MySQL before starting the app
-CMD ["./wait-for-it.sh", "mysql:3306", "-t", "60", "--", "node", "app.js"]
+CMD ["./wait-for-it.sh", "mysql:3306", "-t", "120", "--", "node", "app.js"]
 
