@@ -1,0 +1,42 @@
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=branchflowdb
+      - DB_PORT=3306
+    depends_on:
+      - mysql
+    volumes:
+      - ./Backend/images:/usr/src/app/images  # Persist the /images directory
+
+  mysql:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: branchflowdb
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./Backend/branchflowdb.sql:/docker-entrypoint-initdb.d/branchflowdb.sql
+
+  frontend:
+    build: ./Frontend
+      
+    ports:
+      - "5173:5173"  
+    volumes:
+      - ./Frontend/:/usr/src/app  
+      - node_modules:/usr/src/app/node_modules  
+    depends_on:
+      - backend  
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true  # Enable polling for file changes in Docker
+
+volumes:
+  db_data:
+  node_modules:
