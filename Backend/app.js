@@ -6,7 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const port = 5000;
-const api_base_url_frontend = "localhost:5173";
+const api_base_url_frontend = "134.122.104.124:5173";
 // Configurations
 const db = require('./config/db');
 const sessionConfig = require('./config/session');
